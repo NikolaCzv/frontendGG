@@ -1,7 +1,8 @@
 const initialState = {
     gamesPage: [],
     nextUrl: '',
-    previousUrl: ''
+    previousUrl: '',
+    clickedGame: []
 }
 
 export default function (state = initialState, action) {
@@ -12,6 +13,8 @@ export default function (state = initialState, action) {
             return {...state, nextUrl: action.url, previousUrl: action.pUrl}
         case 'PREVIOUS':
             return {...state, previousUrl: action.url, nextUrl: action.nextUrl}
+        case 'CLICKED':
+            return {...state, clickedGame: action.game}
         default:
             return state
     }
