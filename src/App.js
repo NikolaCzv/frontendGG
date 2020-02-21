@@ -4,6 +4,7 @@ import './App.css';
 import history from './actions/history'
 import homepage from './components/homepage'
 import login from './components/login'
+import gamePage from './components/gamePage'
 
 class App extends React.Component {
 
@@ -13,6 +14,7 @@ class App extends React.Component {
         <Router history={history}>
           <Route exact path='/' component={homepage}/>
           <Route exact path='/login' component={login}/>
+          <Route exact path={`/gamePage/:id`} component={gamePage} /> 
         </Router>
       </div>
     );

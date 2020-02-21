@@ -13,7 +13,7 @@ class Navbar extends React.Component {
         return (
             <Menu pointing secondary>
                 <Menu.Item>
-                    <img src={logo} />
+                    <img src={logo} alt='' />
                 </Menu.Item>
             <Menu.Menu position='right'>
               <Menu.Item

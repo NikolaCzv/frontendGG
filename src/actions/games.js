@@ -78,6 +78,7 @@ export const clickedGame = (url, stateClicked) => {
         .then(data => {
             const clickedGame = data.results.find(game => game.id === stateClicked)
             dispatch(clicked(clickedGame))
+            history.push(`/gamePage/${clickedGame.id}`)
         })
     }
 }

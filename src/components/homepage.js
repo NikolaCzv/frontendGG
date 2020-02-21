@@ -2,12 +2,12 @@ import React from 'react'
 import { fetchAllGames, fetchNextGames, fetchPreviousGames, clickedGame } from '../actions/games'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
-import { Grid, Divider, Image, List } from 'semantic-ui-react'
-import logo from '../logo.png'
+import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
 
 class Homepage extends React.Component{
-    //next step is to make new show page component for clicked game
-    //fix the redux store infinite loop 'clicked'
+
+    //fix next btn, change path and loadiung sign
+    //next step game page fix...
 
     state = {
         page: undefined,
@@ -18,7 +18,7 @@ class Homepage extends React.Component{
     componentDidMount(){
         this.props.fetchAllGames()
     }
-
+    
     nextGames = () => {
         this.props.fetchNextGames(this.props.games.games.nextUrl)
         this.setState({
@@ -34,6 +34,7 @@ class Homepage extends React.Component{
     }
 
     handleNextBtn = () => {
+
         this.setState({
             page: true,
             clicked: undefined,
@@ -62,24 +63,38 @@ class Homepage extends React.Component{
         })
     }
 
-    showGame = (game) => {
+    showGame = () => {
         if(this.state.pageNumber === 1){
             this.props.clickedGame('https://api.rawg.io/api/games?page=1', this.state.clicked)
-            return <div>{game.name}</div>
         } else {
             this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.state.pageNumber}`, this.state.clicked)
-        return <div>{game.name}</div>
         }
     }
 
     renderGames = () => {
         return this.props.games.games.gamesPage.map((game, index) => {
-            return<List.Item key={index} onClick={() => this.handleShowGame(game.id)}>
-                    <Image avatar src={logo} />
-                    <List.Content>
-                         <List.Header>{game.name}</List.Header>
-                    </List.Content>
-                </List.Item>
+
+            const styles = {
+                'width': '100%',
+                'height': '250px',
+            }
+
+            return (
+                <Grid.Column key={index} >
+                <Card>
+                <Image src={game.background_image} style={styles} />
+                <Card.Content>
+                    <Card.Header>{game.name}</Card.Header>
+                  <Card.Meta>
+                    <span className='date'>Released in {game.released}</span>
+                  </Card.Meta>
+                </Card.Content>
+                <Card.Content extra>
+                    <Button onClick={() => this.handleShowGame(game.id)} >More</Button>
+                </Card.Content>
+              </Card>
+              </Grid.Column>
+            )
         })
     }
 
@@ -88,36 +103,26 @@ class Homepage extends React.Component{
         return<div>
             <Navbar/>
                 {this.state.page ? 
-                <Grid columns={2} >
+                <Grid relaxed columns={4}>
                      <Grid.Column>
-                        <List animated verticalAlign='middle'>
                             {this.nextGames()}
-                        </List>
-                    </Grid.Column>
-                    <Grid.Column>
                     {this.state.clicked ?
                         this.showGame(this.props.games.games.clickedGame)
                         :
-                        <div>No game clicked</div>}
+                        <div></div>}
                     </Grid.Column>
                 </Grid>
                  :
-                 <Grid columns={2} >
-                    <Grid.Column>
-                        <List animated verticalAlign='middle'>
+                 <Grid relaxed columns={4}>
                             {this.renderGames()}
-                        </List>
-                     </Grid.Column>
-                     <Grid.Column>
                      {this.state.clicked ?
                         this.showGame(this.props.games.games.clickedGame)
                         :
-                        <div>No game clicked</div>}
-                     </Grid.Column>
+                        <div></div>}
                 </Grid>}
                 <Divider hidden />
-                <button onClick={this.handlePreviousBtn}>Previous</button>
-                <button onClick={this.handleNextBtn}>Next</button>
+                <Button onClick={this.handlePreviousBtn}>Previous</Button>
+                <Button onClick={this.handleNextBtn}>Next</Button>
             </div>
     }
 }
