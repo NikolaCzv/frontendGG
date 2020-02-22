@@ -11,8 +11,7 @@ class Homepage extends React.Component{
 
     state = {
         page: undefined,
-        clicked: undefined,
-        pageNumber: 1
+        clicked: undefined
     }
 
     componentDidMount(){
@@ -38,20 +37,18 @@ class Homepage extends React.Component{
         this.setState({
             page: true,
             clicked: undefined,
-            pageNumber: this.state.pageNumber + 1
         })
 
         this.nextGames()
     }
 
     handlePreviousBtn = () => {
-        if(this.state.pageNumber === 1){
+        if(this.props.games.games.pageNum === 1){
             alert("There is no previuos page! Please try with 'next' button.")
         } else {
         this.setState({
             page: true,
             clicked: undefined,
-            pageNumber: this.state.pageNumber - 1
         })
         this.previousGames()
         }
@@ -64,10 +61,10 @@ class Homepage extends React.Component{
     }
 
     showGame = () => {
-        if(this.state.pageNumber === 1){
+        if(this.props.games.games.pageNum === 1){
             this.props.clickedGame('https://api.rawg.io/api/games?page=1', this.state.clicked)
         } else {
-            this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.state.pageNumber}`, this.state.clicked)
+            this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.props.games.games.pageNum}`, this.state.clicked)
         }
     }
 
@@ -102,6 +99,7 @@ class Homepage extends React.Component{
     render(){
         return<div>
             <Navbar/>
+            <div className='home'>
                 {this.state.page ? 
                 <Grid relaxed columns={4}>
                      <Grid.Column>
@@ -123,6 +121,7 @@ class Homepage extends React.Component{
                 <Divider hidden />
                 <Button onClick={this.handlePreviousBtn}>Previous</Button>
                 <Button onClick={this.handleNextBtn}>Next</Button>
+                </div>
             </div>
     }
 }

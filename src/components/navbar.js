@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 import logo from '../logo.png'
 import history from '../actions/history'
 
@@ -16,10 +16,7 @@ class Navbar extends React.Component {
                     <img src={logo} alt='' />
                 </Menu.Item>
             <Menu.Menu position='right'>
-              <Menu.Item
-                name='login'
-                onClick={this.handleLogin}
-              />
+              <Button color='twitter' onClick={this.handleLogin} size='mini'>Login</Button>
             </Menu.Menu>
           </Menu>
           )

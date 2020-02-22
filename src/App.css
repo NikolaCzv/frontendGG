@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+.showDiv {
+  background-color: #282c34;
+}
+
+.gameText {
+  color: white;
+  font-family: Monospace;
+}
+
+.home {
+  background-color: #282c34;
+}
