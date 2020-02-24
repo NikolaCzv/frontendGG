@@ -7,7 +7,7 @@ class Login extends React.Component{
         return <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
             <Image src={logo}/>
-          <Header as='h2' color='red' textAlign='center'>
+          <Header as='h2' color='blue' textAlign='center'>
             Log in to your account
           </Header>
           <Form size='large' onSubmit={this.handleLogin}>
@@ -29,7 +29,7 @@ class Login extends React.Component{
                 onChange={(event) => this.handleInputChange(event)}
               />
     
-              <Button color='red' fluid size='large'>
+              <Button color='twitter' fluid size='large'>
                 Login
               </Button>
             </Segment>

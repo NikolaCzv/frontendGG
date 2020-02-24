@@ -30,9 +30,15 @@ const clicked = game => {
     }
 }
 
-export const fetchAllGames = () => {
+const handlePageUp = () => {
+    return {
+        type: 'PAGE_UP'
+    }
+} 
+
+export const fetchAllGames = (pageNum) => {
     return function(dispatch){
-        fetch('https://api.rawg.io/api/games?page=1')
+        fetch(`https://api.rawg.io/api/games?page=${pageNum}`)
         .then(resp => resp.json())
         .then(data => {
             let games = data.results
@@ -80,5 +86,11 @@ export const clickedGame = (url, stateClicked) => {
             dispatch(clicked(clickedGame))
             history.push(`/gamePage/${clickedGame.id}`)
         })
+    }
+}
+
+export const pageUp = () => {
+    return function(dispatch){
+        dispatch(handlePageUp())
     }
 }

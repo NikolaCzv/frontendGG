@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchAllGames, fetchNextGames, fetchPreviousGames, clickedGame } from '../actions/games'
+import { fetchAllGames, fetchNextGames, fetchPreviousGames, clickedGame, pageUp } from '../actions/games'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
 import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
@@ -15,11 +15,12 @@ class Homepage extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchAllGames()
+        this.props.fetchAllGames(this.props.games.games.pageNum)
     }
     
     nextGames = () => {
         this.props.fetchNextGames(this.props.games.games.nextUrl)
+
         this.setState({
             page: undefined
         })
@@ -40,6 +41,7 @@ class Homepage extends React.Component{
         })
 
         this.nextGames()
+        this.props.pageUp()
     }
 
     handlePreviousBtn = () => {
@@ -87,7 +89,8 @@ class Homepage extends React.Component{
                   </Card.Meta>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button onClick={() => this.handleShowGame(game.id)} >More</Button>
+                    <Button onClick={() => this.handleShowGame(game.id)} size='mini' color='black'>More</Button>
+                    <Button size='mini' color='black'> Review </Button>
                 </Card.Content>
               </Card>
               </Grid.Column>
@@ -103,7 +106,6 @@ class Homepage extends React.Component{
                 {this.state.page ? 
                 <Grid relaxed columns={4}>
                      <Grid.Column>
-                            {this.nextGames()}
                     {this.state.clicked ?
                         this.showGame(this.props.games.games.clickedGame)
                         :
@@ -119,8 +121,8 @@ class Homepage extends React.Component{
                         <div></div>}
                 </Grid>}
                 <Divider hidden />
-                <Button onClick={this.handlePreviousBtn}>Previous</Button>
-                <Button onClick={this.handleNextBtn}>Next</Button>
+                <Button onClick={this.handlePreviousBtn} color='twitter'>Previous</Button>
+                <Button onClick={this.handleNextBtn} color='twitter'>Next</Button>
                 </div>
             </div>
     }
@@ -134,10 +136,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllGames: () => dispatch(fetchAllGames()),
+        fetchAllGames: (pageNum) => dispatch(fetchAllGames(pageNum)),
         fetchNextGames: url => dispatch(fetchNextGames(url)),
         fetchPreviousGames: url => dispatch(fetchPreviousGames(url)),
-        clickedGame: (url, stateClicked) => dispatch(clickedGame(url, stateClicked))
+        clickedGame: (url, stateClicked) => dispatch(clickedGame(url, stateClicked)),
+        pageUp: () => dispatch(pageUp())
     }
 }
 

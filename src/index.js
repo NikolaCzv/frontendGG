@@ -9,6 +9,9 @@ import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import 'semantic-ui-css/semantic.min.css'
 
+
+
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(combineReducer, composeEnhancers(applyMiddleware(thunk)))
 

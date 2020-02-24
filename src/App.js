@@ -12,7 +12,7 @@ class App extends React.Component {
     return (
       <div>
         <Router history={history}>
-          <Route exact path='/' component={homepage}/>
+          <Route exact path='/' component={homepage} />
           <Route exact path='/login' component={login}/>
           <Route exact path={`/gamePage/:id`} component={gamePage} /> 
         </Router>
