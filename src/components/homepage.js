@@ -6,7 +6,6 @@ import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
 
 class Homepage extends React.Component{
 
-    //fix next btn, change path and loadiung sign
     //next step game page fix...
 
     state = {
@@ -16,6 +15,12 @@ class Homepage extends React.Component{
 
     componentDidMount(){
         this.props.fetchAllGames(this.props.games.games.pageNum)
+    }
+
+    componentDidUpdate(prevProps){
+        if(!prevProps.games.games.pageNum && this.props.games.games.pageNum){
+            this.props.fetchAllGames(this.props.games.games.pageNum)
+        }
     }
     
     nextGames = () => {
@@ -42,6 +47,7 @@ class Homepage extends React.Component{
 
         this.nextGames()
         this.props.pageUp()
+        document.documentElement.scrollTop = 0;
     }
 
     handlePreviousBtn = () => {
@@ -53,6 +59,7 @@ class Homepage extends React.Component{
             clicked: undefined,
         })
         this.previousGames()
+        document.documentElement.scrollTop = 0;
         }
     }
 

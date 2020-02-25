@@ -3,10 +3,15 @@ import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui
 import logo from '../logo.png'
 
 class Login extends React.Component{
+
+  handleImage = () => {
+    this.props.history.push('/')
+  }
+
     render(){
         return <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
-            <Image src={logo}/>
+            <Image src={logo} onClick={this.handleImage}/>
           <Header as='h2' color='blue' textAlign='center'>
             Log in to your account
           </Header>
