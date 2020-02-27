@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
 import { Image, Grid, Item} from 'semantic-ui-react'
-import { clickedGame } from '../actions/games'
+import { clickedGame, fetchAllGames } from '../actions/games'
 
 class GamePage extends React.Component{
 
@@ -14,12 +14,19 @@ class GamePage extends React.Component{
         }
     }
 
-    componentDidMount(){
-        if (!this.props.games.games.clickedGame.id) {
-            this.props.clickedGame()
-        }
-    }
+    // componentDidMount(){
+    //     if (!this.props.games.games.clickedGame.id) {
+    //         this.props.fetchAllGames()
+    //         this.props.clickedGame()
+    //     }
+    // }
 
+    // componentDidUpdate(prevProps){
+    //     if(!prevProps.games.games.pageNum && this.props.games.games.pageNum){
+    //         this.props.fetchAllGames(this.props.games.games.pageNum)
+    //         this.props.clickedGame()
+    //     }
+    // }
 
     render(){
         const styles = {
@@ -62,7 +69,8 @@ const mapStateToProps = state => {
 
 const dispatchStateToProps = dispatch => {
     return {
-        clickedGame: (url, stateClicked) => {dispatch(clickedGame(url, stateClicked))}
+        clickedGame: (url, stateClicked) => {dispatch(clickedGame(url, stateClicked))},
+        fetchAllGames: (pageNum) => {dispatch(fetchAllGames(pageNum))}
     }
 }
 

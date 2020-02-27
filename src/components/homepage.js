@@ -6,7 +6,7 @@ import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
 
 class Homepage extends React.Component{
 
-    //next step game page fix...
+    //next steps: logged in navbar, fix refresh on game page, sign up...
 
     state = {
         page: undefined,

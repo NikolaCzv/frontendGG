@@ -1,11 +1,29 @@
 import React from 'react'
 import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 import logo from '../logo.png'
+import { login } from '../actions/users'
+import { connect } from 'react-redux'
 
 class Login extends React.Component{
 
+  state = {
+    username: '',
+    password: ''
+  }
+
   handleImage = () => {
     this.props.history.push('/')
+  }
+
+  handleLogin = (event) => {
+    event.preventDefault()
+    this.props.login(this.state)
+  }
+
+  handleInputChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
   }
 
     render(){
@@ -48,4 +66,10 @@ class Login extends React.Component{
     
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+  return {
+    login: user => {dispatch(login(user))}
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
