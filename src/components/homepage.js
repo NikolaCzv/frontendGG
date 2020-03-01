@@ -3,6 +3,7 @@ import { fetchAllGames, fetchNextGames, fetchPreviousGames, clickedGame, pageUp 
 import { connect } from 'react-redux'
 import Navbar from './navbar'
 import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
+import LoggedInNavbar from './loggedInNavbar'
 
 class Homepage extends React.Component{
 
@@ -18,7 +19,7 @@ class Homepage extends React.Component{
     }
 
     componentDidUpdate(prevProps){
-        if(!prevProps.games.games.pageNum && this.props.games.games.pageNum){
+        if(!prevProps.games.users.user.id && this.props.games.users.user.id){
             this.props.fetchAllGames(this.props.games.games.pageNum)
         }
     }
@@ -70,11 +71,7 @@ class Homepage extends React.Component{
     }
 
     showGame = () => {
-        if(this.props.games.games.pageNum === 1){
-            this.props.clickedGame('https://api.rawg.io/api/games?page=1', this.state.clicked)
-        } else {
             this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.props.games.games.pageNum}`, this.state.clicked)
-        }
     }
 
     renderGames = () => {
@@ -96,8 +93,8 @@ class Homepage extends React.Component{
                   </Card.Meta>
                 </Card.Content>
                 <Card.Content extra>
-                    <Button onClick={() => this.handleShowGame(game.id)} size='mini' color='black'>More</Button>
-                    <Button size='mini' color='black'> Review </Button>
+                    <Button onClick={() => this.handleShowGame(game.id)} size='mini' color='black'>View</Button>
+                    <Button size='mini' color='red'> Like </Button>
                 </Card.Content>
               </Card>
               </Grid.Column>
@@ -108,7 +105,10 @@ class Homepage extends React.Component{
 
     render(){
         return<div>
-            <Navbar/>
+            {this.props.games.users.user.id ?
+            <LoggedInNavbar/>
+            :
+            <Navbar/>}
             <div className='home'>
                 {this.state.page ? 
                 <Grid relaxed columns={4}>

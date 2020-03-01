@@ -9,7 +9,7 @@ const initialState = {
 export default function (state = initialState, action) {
     switch (action.type) {
         case '20_GAMES':
-            return {...state, gamesPage: action.games, clickedGame: undefined}
+            return {...state, gamesPage: action.games}
         case 'NEXT':
             if(action.pUrl === undefined) {
                 return {...state, nextUrl: action.url}

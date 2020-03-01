@@ -1,8 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
-import { Image, Grid, Item} from 'semantic-ui-react'
+import { Image, Grid, Item, Segment, Dimmer, Loader, Divider} from 'semantic-ui-react'
 import { clickedGame, fetchAllGames } from '../actions/games'
+import LoggedInNavbar from './loggedInNavbar'
 
 class GamePage extends React.Component{
 
@@ -14,29 +15,49 @@ class GamePage extends React.Component{
         }
     }
 
-    // componentDidMount(){
-    //     if (!this.props.games.games.clickedGame.id) {
-    //         this.props.fetchAllGames()
-    //         this.props.clickedGame()
-    //     }
-    // }
+    componentDidMount(){
+        // debugger
+        if (!this.props.games.games.clickedGame.id) {
+            this.props.fetchAllGames(this.props.games.games.pageNum)
+            this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.props.games.games.pageNum}`, parseInt(this.props.match.params.id))
+        }
+    }
 
-    // componentDidUpdate(prevProps){
-    //     if(!prevProps.games.games.pageNum && this.props.games.games.pageNum){
-    //         this.props.fetchAllGames(this.props.games.games.pageNum)
-    //         this.props.clickedGame()
-    //     }
-    // }
+    componentDidUpdate(prevProps, prevState){
+            if(this.props.games.games.clickedGame.id && prevState.loading){
+                this.setState({
+                    loading: false
+                })
+            }
+
+            if(!prevProps.games.games.clickedGame.id && this.props.games.games.clickedGame.id){
+                this.props.fetchAllGames(this.props.games.games.pageNum)
+                this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.props.games.games.pageNum}`, parseInt(this.props.match.params.id))
+            }
+    }
+
 
     render(){
         const styles = {
             'width': '100%',
             'height': '800px',
         }
-
+        if (this.state.loading){
+            return (
+            <div>
+                <Navbar/>
+                <Divider hidden />
+                <Dimmer active inverted>
+                    <Loader size='big'>Loading</Loader>
+                </Dimmer>
+            </div>)
+        }
         return (
         <div>
-                    <Navbar />
+            {this.props.games.users.user.id ?
+            <LoggedInNavbar/>
+            :
+            <Navbar/>}
              <div className='showDiv'>
              <Grid>
                 <Grid.Column width={4}>
@@ -67,11 +88,11 @@ const mapStateToProps = state => {
     }
 }
 
-const dispatchStateToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
     return {
         clickedGame: (url, stateClicked) => {dispatch(clickedGame(url, stateClicked))},
         fetchAllGames: (pageNum) => {dispatch(fetchAllGames(pageNum))}
     }
 }
 
-export default connect(mapStateToProps, dispatchStateToProps)(GamePage)
+export default connect(mapStateToProps, mapDispatchToProps)(GamePage)
