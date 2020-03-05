@@ -59,3 +59,29 @@ export const checkUser = token => {
         })
     }
 }
+
+export const signup = user => {
+
+    return function(dispatch){
+        const reqObj = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }
+
+        fetch('http://localhost:3000/api/v1/signup', reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            if(data.error){
+                alert('Invalid input')
+            } else {
+                localStorage.setItem('token', data.token)
+                dispatch(userLogin(data))
+                history.push('/')
+            }
+        })
+    }
+
+} 

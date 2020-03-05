@@ -7,7 +7,7 @@ import LoggedInNavbar from './loggedInNavbar'
 
 class Homepage extends React.Component{
 
-    //next steps: logged in navbar, fix refresh on game page, sign up...
+    //next steps: fix refresh on homepage, fix refresh stay logged in
 
     state = {
         page: undefined,

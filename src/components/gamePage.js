@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
-import { Image, Grid, Item, Segment, Dimmer, Loader, Divider} from 'semantic-ui-react'
+import { Image, Grid, Item, Dimmer, Loader, Divider} from 'semantic-ui-react'
 import { clickedGame, fetchAllGames } from '../actions/games'
 import LoggedInNavbar from './loggedInNavbar'
 

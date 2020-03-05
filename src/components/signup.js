@@ -1,8 +1,17 @@
 import React from 'react'
 import { Grid, Divider, Image, Button, Header, Form } from 'semantic-ui-react'
 import logo from '../logo.png'
+import {connect} from 'react-redux'
+import {signup} from '../actions/users'
 
 class Signup extends React.Component {
+
+    state = {
+        username: '',
+        email: '',
+        password: '',
+        password_confirmation: ''
+    }
 
     handleBackButton = () => {
         this.props.history.push('/login')
@@ -10,6 +19,17 @@ class Signup extends React.Component {
 
     handleHomePage = () => {
         this.props.history.push('/')
+    }
+
+    handleChange = event => {
+        this.setState({
+            [event.target.name]: event.target.value
+        }) 
+    }
+
+    handleSubmit = event => {
+        event.preventDefault()
+        this.props.signup(this.state)
     }
 
     render(){
@@ -67,4 +87,10 @@ class Signup extends React.Component {
     }
 }
 
-export default Signup
+const mapDispatchToProps = dispatch => {
+    return {
+        signup: (user) => dispatch(signup(user))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Signup)
