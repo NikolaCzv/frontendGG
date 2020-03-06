@@ -18,6 +18,10 @@ class LoggedInNavbar extends React.Component {
         history.push('/')
     }
 
+    handleMyProfile = () => {
+        history.push('/myProfile')
+    }
+
     render(){
         return (
             <Menu pointing secondary>
@@ -26,7 +30,7 @@ class LoggedInNavbar extends React.Component {
                 </Menu.Item>
                 <Menu.Item
                 name='myProfile'
-                onClick={this.handleProfile}
+                onClick={this.handleMyProfile}
                 />
                 <Menu.Item
                 name='homepage'

@@ -6,6 +6,7 @@ import homepage from './components/homepage'
 import login from './components/login'
 import gamePage from './components/gamePage'
 import signup from './components/signup'
+import myProfile from './components/myProfile'
 
 class App extends React.Component {
 
@@ -17,6 +18,7 @@ class App extends React.Component {
           <Route exact path='/login' component={login}/>
           <Route exact path={`/gamePage/:id`} component={gamePage} /> 
           <Route exact path='/signup' component={signup} />
+          <Route exact path='/myProfile' component={myProfile} />
         </Router>
       </div>
     );
