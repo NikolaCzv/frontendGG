@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import LoggedInNavbar from './loggedInNavbar'
+import WithAuth from './WithAuth'
 
 class MyProfile extends React.Component{
     
@@ -9,6 +10,7 @@ class MyProfile extends React.Component{
         return (
             <div>
                 <LoggedInNavbar />
+                <h1>My Profile</h1>
             </div>
         )
     }
@@ -20,4 +22,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(MyProfile)
+export default connect(mapStateToProps)(WithAuth(MyProfile))

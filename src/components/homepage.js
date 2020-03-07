@@ -8,7 +8,6 @@ import LoggedInNavbar from './loggedInNavbar'
 class Homepage extends React.Component{
 
     //next steps: fix refresh on homepage, fix refresh stay logged in
-    // test test test test
 
     state = {
         page: undefined,

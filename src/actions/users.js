@@ -84,4 +84,4 @@ export const signup = user => {
         })
     }
 
-} 
+}
