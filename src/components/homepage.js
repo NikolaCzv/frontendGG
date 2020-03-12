@@ -4,10 +4,12 @@ import { connect } from 'react-redux'
 import Navbar from './navbar'
 import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
 import LoggedInNavbar from './loggedInNavbar'
+import { login, checkUser } from '../actions/users'
 
 class Homepage extends React.Component{
 
-    //next steps: fix refresh on homepage, fix refresh stay logged in
+    //next steps: fix refresh on homepage, add default avatar on backend
+    // finish up my profile page
 
     state = {
         page: undefined,
@@ -15,7 +17,12 @@ class Homepage extends React.Component{
     }
 
     componentDidMount(){
-        this.props.fetchAllGames(this.props.games.games.pageNum)
+        if(!localStorage.getItem('token')){
+            this.props.fetchAllGames(this.props.games.games.pageNum)
+        } else {
+            this.props.fetchAllGames(this.props.games.games.pageNum)
+            this.props.checkUser(localStorage.getItem('token'))
+        }
     }
 
     componentDidUpdate(prevProps){
@@ -147,7 +154,9 @@ const mapDispatchToProps = dispatch => {
         fetchNextGames: url => dispatch(fetchNextGames(url)),
         fetchPreviousGames: url => dispatch(fetchPreviousGames(url)),
         clickedGame: (url, stateClicked) => dispatch(clickedGame(url, stateClicked)),
-        pageUp: () => dispatch(pageUp())
+        pageUp: () => dispatch(pageUp()),
+        login: user => dispatch(login(user)),
+        checkUser: token => dispatch(checkUser(token))
     }
 }
 
