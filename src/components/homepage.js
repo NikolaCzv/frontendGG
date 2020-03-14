@@ -8,8 +8,7 @@ import { login, checkUser } from '../actions/users'
 
 class Homepage extends React.Component{
 
-    //next steps: fix refresh on homepage, add default avatar on backend
-    // finish up my profile page
+    //next steps: fix refresh on homepage, finish up my profile page, find friends, follow 
 
     state = {
         page: undefined,
@@ -135,7 +134,11 @@ class Homepage extends React.Component{
                         <div></div>}
                 </Grid>}
                 <Divider hidden />
+                {this.props.games.games.pageNum > 1 ? 
                 <Button onClick={this.handlePreviousBtn} color='twitter'>Previous</Button>
+                :
+                null
+                }
                 <Button onClick={this.handleNextBtn} color='twitter'>Next</Button>
                 </div>
             </div>

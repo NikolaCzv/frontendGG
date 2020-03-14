@@ -40,6 +40,10 @@ class LoggedInNavbar extends React.Component {
                 name='dashboard'
                 onClick={this.handleDash}
                 />
+                <Menu.Item
+                name='findFriends'
+                onClick={this.handleFriends}
+                />
             <Menu.Menu position='right'>
               <Button color='red' onClick={this.handleLogout} size='mini'>Log out</Button>
             </Menu.Menu>
