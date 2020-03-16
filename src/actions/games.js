@@ -94,3 +94,26 @@ export const pageUp = () => {
         dispatch(handlePageUp())
     }
 }
+
+export const addGame = game => {
+    return function(dispatch){
+        const reqObj = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: game.name,
+                image: game.background_image,
+                released_date: game.released,
+                gameId: game.id
+            })
+        }
+
+        fetch('http://localhost:3000/api/v1/games', reqObj)
+        .then(resp => resp.json())
+        .then(data => {
+            console.log(data)
+        })
+    }
+}

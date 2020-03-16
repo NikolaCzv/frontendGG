@@ -8,7 +8,7 @@ import { login, checkUser } from '../actions/users'
 
 class Homepage extends React.Component{
 
-    //next steps: fix refresh on homepage, finish up my profile page, find friends, follow 
+    //next steps: fix refresh on homepage, find friends, follow, MAKE ADD REVIEW WORK 
 
     state = {
         page: undefined,
@@ -100,7 +100,7 @@ class Homepage extends React.Component{
                 </Card.Content>
                 <Card.Content extra>
                     <Button onClick={() => this.handleShowGame(game.id)} size='mini' color='black'>View</Button>
-                    <Button size='mini' color='red'> Like </Button>
+                    <Button size='mini' color='red'> Add to Favorite </Button>
                 </Card.Content>
               </Card>
               </Grid.Column>

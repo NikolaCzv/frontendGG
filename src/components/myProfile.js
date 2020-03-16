@@ -20,7 +20,7 @@ class MyProfile extends React.Component{
                 <Grid>
                     <Grid.Column width={4}>
                         <Card>
-                            <Image src={profPicDef} wrapped ui={false} />
+                            <Image src={profPicDef} wrapped ui={false} alt='' />
                             <Card.Content>
                                 <Card.Header>{this.props.games.users.user.username}</Card.Header>
                             </Card.Content>
@@ -34,6 +34,11 @@ class MyProfile extends React.Component{
                         <Menu.Item
                             name='myGames'
                             active={activeItem === 'myGames'}
+                            onClick={this.handleItemClick}
+                        />
+                        <Menu.Item
+                            name='reviewedGames'
+                            active={activeItem === 'reviewedGames'}
                             onClick={this.handleItemClick}
                         />
                         <Menu.Item
