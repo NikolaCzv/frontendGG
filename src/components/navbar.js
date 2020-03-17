@@ -8,6 +8,7 @@ class Navbar extends React.Component {
     handleLogin = () => {
         history.push('/login')
     }
+    
 
     render(){
         return (

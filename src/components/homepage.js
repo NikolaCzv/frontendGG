@@ -1,5 +1,5 @@
 import React from 'react'
-import { fetchAllGames, fetchNextGames, fetchPreviousGames, clickedGame, pageUp } from '../actions/games'
+import { fetchAllGames, fetchNextGames, fetchPreviousGames, clickedGame, pageUp, myDataGames } from '../actions/games'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
 import { Grid, Divider, Image, Button, Card } from 'semantic-ui-react'
@@ -8,7 +8,7 @@ import { login, checkUser } from '../actions/users'
 
 class Homepage extends React.Component{
 
-    //next steps: fix refresh on homepage, find friends, follow, MAKE ADD REVIEW WORK 
+    //next steps: fix refresh on homepage, find friends, follow, render reviews
 
     state = {
         page: undefined,
@@ -18,15 +18,18 @@ class Homepage extends React.Component{
     componentDidMount(){
         if(!localStorage.getItem('token')){
             this.props.fetchAllGames(this.props.games.games.pageNum)
+            this.props.myDataGames()
         } else {
             this.props.fetchAllGames(this.props.games.games.pageNum)
             this.props.checkUser(localStorage.getItem('token'))
+            this.props.myDataGames()
         }
     }
 
     componentDidUpdate(prevProps){
         if(!prevProps.games.users.user.id && this.props.games.users.user.id){
             this.props.fetchAllGames(this.props.games.games.pageNum)
+            this.props.myDataGames()
         }
     }
     
@@ -159,7 +162,8 @@ const mapDispatchToProps = dispatch => {
         clickedGame: (url, stateClicked) => dispatch(clickedGame(url, stateClicked)),
         pageUp: () => dispatch(pageUp()),
         login: user => dispatch(login(user)),
-        checkUser: token => dispatch(checkUser(token))
+        checkUser: token => dispatch(checkUser(token)),
+        myDataGames: () => dispatch(myDataGames())
     }
 }
 

@@ -1,5 +1,6 @@
-export const addReview = review => {
+export const addReview = (review, game, user) => {
     return function(dispatch){
+
         const reqObj = {
             method: 'POST',
             headers: {
@@ -7,8 +8,8 @@ export const addReview = review => {
             },
             body: JSON.stringify({
                 content: review.content,
-                user_id: review.user_id,
-                game_id: review.game_id
+                game_id: game.id,
+                user_id: user.id
             })
         }
 

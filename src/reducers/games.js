@@ -3,7 +3,8 @@ const initialState = {
     nextUrl: '',
     previousUrl: '',
     clickedGame: [],
-    pageNum: 1
+    pageNum: 1,
+    savedGames: []
 }
 
 export default function (state = initialState, action) {
@@ -22,6 +23,8 @@ export default function (state = initialState, action) {
             return {...state, clickedGame: action.game}
         case 'PAGE_UP':
             return {...state, pageNum: state.pageNum + 1}
+        case 'MY_GAMES':
+            return {...state, savedGames: action.games}
         default:
             return state
     }

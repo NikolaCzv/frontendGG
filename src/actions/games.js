@@ -7,6 +7,13 @@ const getGames = games => {
     }
 }
 
+const saveGames = games => {
+    return {
+        type: 'MY_GAMES',
+        games
+    }
+}
+
 const nextUrlAction = (url, pUrl) => {
     return {
         type: 'NEXT',
@@ -114,6 +121,16 @@ export const addGame = game => {
         .then(resp => resp.json())
         .then(data => {
             console.log(data)
+        })
+    }
+}
+
+export const myDataGames = () => {
+    return function(dispatch){
+        fetch('http://localhost:3000/api/v1/games')
+        .then(resp => resp.json())
+        .then(data => {
+            dispatch(saveGames(data))
         })
     }
 }

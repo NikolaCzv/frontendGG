@@ -2,14 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Navbar from './navbar'
 import { Image, Grid, Item, Dimmer, Loader, Divider, Form, TextArea, Button} from 'semantic-ui-react'
-import { clickedGame, fetchAllGames, addGame } from '../actions/games'
+import { clickedGame, fetchAllGames, addGame, myDataGames } from '../actions/games'
 import { checkUser } from '../actions/users'
 import { addReview } from '../actions/reviews'
 import LoggedInNavbar from './loggedInNavbar'
 
 class GamePage extends React.Component{
 
-    // MAKE ADD REVIEW WORK 
 
     constructor(){
         super()
@@ -17,8 +16,6 @@ class GamePage extends React.Component{
         this.state = {
             loading: true,
             content: ''
-            // game_id: this.props.games.games.clickedGame.id,
-            // user_id: this.props.games.users.user.id
         }
     }
 
@@ -26,13 +23,19 @@ class GamePage extends React.Component{
         if (!this.props.games.games.clickedGame.id) {
             this.props.fetchAllGames(this.props.games.games.pageNum)
             this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.props.games.games.pageNum}`, parseInt(this.props.match.params.id))
+            this.props.myDataGames()
+            this.props.addGame(this.props.games.games.clickedGame)
         }
 
         if(!localStorage.getItem('token')){
             this.props.fetchAllGames(this.props.games.games.pageNum)
+            this.props.myDataGames()
+            this.props.addGame(this.props.games.games.clickedGame)
         } else {
             this.props.fetchAllGames(this.props.games.games.pageNum)
             this.props.checkUser(localStorage.getItem('token'))
+            this.props.myDataGames()
+            this.props.addGame(this.props.games.games.clickedGame)
         }
     }
 
@@ -46,7 +49,8 @@ class GamePage extends React.Component{
             if(!prevProps.games.games.clickedGame.id && this.props.games.games.clickedGame.id){
                 this.props.fetchAllGames(this.props.games.games.pageNum)
                 this.props.clickedGame(`https://api.rawg.io/api/games?page=${this.props.games.games.pageNum}`, parseInt(this.props.match.params.id))
-
+                this.props.myDataGames()
+                this.props.addGame(this.props.games.games.clickedGame)
             }
     }
 
@@ -62,8 +66,12 @@ class GamePage extends React.Component{
 
     handleReview = (event) => {
         event.preventDefault()
-        this.props.addGame(this.props.games.games.clickedGame)
-        this.props.addReview(this.state)
+        const myGame = this.props.games.games.savedGames.find(game => game.gameId === this.props.games.games.clickedGame.id)
+        this.props.addReview(this.state, myGame, this.props.games.users.user)
+    }
+
+    handleBackBtn = () => {
+        this.props.history.push('/')
     }
 
     render(){
@@ -93,6 +101,15 @@ class GamePage extends React.Component{
                 <Item>
 
                     <Item.Content>
+                        {this.props.games.users.user.id ?
+                        null
+                        :
+                        <div>
+                            <Button size='mini' color='black' onClick={this.handleBackBtn}> Back to Homepage </Button>
+                            <Divider hidden />
+                        </div>
+
+                        }
                         <h1 className='gameText'>{this.props.games.games.clickedGame.name}</h1>
                         <Item.Meta className='gameText'>Realised Date: {this.props.games.games.clickedGame.released}</Item.Meta>
                         <Divider hidden />
@@ -101,6 +118,7 @@ class GamePage extends React.Component{
                         <Item.Description>
                         </Item.Description>
                             <Divider hidden />
+                            {this.props.games.users.user.id ? 
                             <Form onSubmit={this.handleReview}>
                                 <h3 className='gameText' >Review</h3>
                                 <Form.Field
@@ -109,7 +127,10 @@ class GamePage extends React.Component{
                                     onChange={this.handleChange}
                                     />
                                 <Button type='submit' color='twitter' fluid size='mini'>Add Review</Button>
-                            </Form>
+                            </Form> 
+                            :
+                            null
+                            }
                     </Item.Content>
                 </Item>
                 </Grid.Column>
@@ -135,7 +156,8 @@ const mapDispatchToProps = dispatch => {
         fetchAllGames: (pageNum) => {dispatch(fetchAllGames(pageNum))},
         checkUser: token => dispatch(checkUser(token)),
         addGame: game => dispatch(addGame(game)),
-        addReview: review => dispatch(addReview(review))
+        addReview: (review, game, user) => dispatch(addReview(review, game, user)),
+        myDataGames: () => dispatch(myDataGames())
     }
 }
 
